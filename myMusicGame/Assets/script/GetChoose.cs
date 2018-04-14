@@ -61,7 +61,7 @@ public class GetChoose : MonoBehaviour {
    
             musicImage = chooseMusicIns.transform.GetChild(0);
 	        musicName = chooseMusicIns.transform.GetChild(1);
-            print(Resources.Load<Sprite>("bg/" + name[musicNumber]));
+            //print(Resources.Load<Sprite>("bg/" + name[musicNumber]));
 
             musicImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("bg/" + name[musicNumber]) as Sprite;
             musicName.GetComponent<Text>().text = name[musicNumber];

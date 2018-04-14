@@ -11,9 +11,9 @@ public class ClickChoose : MonoBehaviour
     public void click()
     {
         Transform music = this.transform.GetChild(1);
-     chooseName= music.GetComponent<Text >().text;//获取所选音乐的名字
-        print(chooseName);
-      
+        chooseName= music.GetComponent<Text >().text;//获取所选音乐的名字
+        //print(chooseName);
+        
     }
 
 }

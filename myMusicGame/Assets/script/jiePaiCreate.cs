@@ -23,12 +23,21 @@ public class jiePaiCreate : MonoBehaviour {
     private int timeIndex;
 
     private bool isCreate = true;
-    
-    private float randomX, randomY;
+
+    private float randomX = 0, randomY = 0, tempX = 0, tempY = 0;
+    private float AreaWidth = 1750f, AreaHeight = 800f;
+    private float offsetY = -70f;
+
+    public float interalX = 120f, interalY = 120;
+
+    private AudioSource music;  // 播放音乐的组件
 
     private int sortNum = 0;
 
     public static bool isEnd = false;
+
+    private string musicName;
+     
 
     // Use this for initialization
     private void Awake()
@@ -39,7 +48,7 @@ public class jiePaiCreate : MonoBehaviour {
 
     }
     void Start () {
-
+        music = this.GetComponent<AudioSource>();
         musicOn();//设置加载的音乐开启
 
         //ClickChoose getchoose = new ClickChoose();
@@ -64,17 +73,19 @@ public class jiePaiCreate : MonoBehaviour {
 
     public void create() //生成节拍 和 判断音乐结束并生成重新开始界面 的方法
     {
-        
-         randomX = Random.Range(-260,260);
-        randomY = Random.Range(-200, 184);//音符出现位置
-        
+        while (Mathf.Abs(randomX - tempX) < interalX || Mathf.Abs(randomY - tempY) < interalY)
+        {
+            randomX = Random.Range(-AreaWidth/2, AreaWidth/2);
+            randomY = Random.Range(-AreaHeight / 2 + offsetY, AreaHeight / 2 + offsetY);//音符出现位置
+        }
+        //Debug.Log("X " + randomX + "  Y " + randomY);
         if(timer>= timing)//到了相应的时间点就生成一个 节拍
       
         {
             jiePaiOn = Instantiate(jiepai);
             jiePaiOn.transform.SetParent(this.transform);
-            jiePaiOn.transform.localPosition =new Vector3(randomX,randomY,0);
-            jiePaiOn.transform.localScale = new Vector3(1.5f,1.5f,1.5f);//音符大小
+            jiePaiOn.transform.localPosition = new Vector3(randomX,randomY,0);
+            //jiePaiOn.transform.localScale = new Vector3(1.5f,1.5f,1.5f);//音符大小
             jiePaiOn.transform.Find("sortText").GetComponent<Text>().text = "" + (++sortNum);
             if (sortNum == 10) sortNum = 0;
             if (timeIndex + 1 < jiepaiTimeList.Count)
@@ -90,14 +101,15 @@ public class jiePaiCreate : MonoBehaviour {
         {
             isEnd = true;
         };//返回音乐结束判断
-            
-        
+
+        tempX = randomX;
+        tempY = randomY;
     }
 
     private void LoadMusic()
     {
         //获取所选择的歌曲名
-        string musicName = ClickChoose.chooseName;
+        musicName = ClickChoose.chooseName;
         //print(musicName);
 
         //添加对应的音乐
@@ -140,7 +152,14 @@ public class jiePaiCreate : MonoBehaviour {
 
     private void musicOn()
     {
-        this.transform.GetComponent<AudioSource>().Play();
+        if(musicName == "GuiltyCrown" || musicName == "WeightoftheWorld"){
+            this.music.volume = 0.13f;
+        }
+        else
+        {
+            this.music.volume = 0.23f;
+        }
+        music.Play();
     }
 
     

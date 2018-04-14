@@ -11,6 +11,8 @@ public class PlayManager : MonoBehaviour
 
     public GameObject bg;  //get background
 
+    private bool isPause = false;
+
     void Update()
     {
         if (jiePaiCreate.isEnd == true)
@@ -24,6 +26,8 @@ public class PlayManager : MonoBehaviour
 
     public void pause()
     {
+        if (isPause) return;
+        else isPause = !isPause;
         Time.timeScale = 0;
         musicOff();
         btnSwitch();
@@ -50,6 +54,7 @@ public class PlayManager : MonoBehaviour
 
     public void resume()
     {
+        isPause = !isPause;
         Time.timeScale = 1;
         musicOn();
         btnSwitch();

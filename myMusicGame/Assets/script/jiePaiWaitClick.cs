@@ -16,13 +16,15 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
     private string judgeText;
     private bool isComb = false;
     private static int combHit = 0;
-  
+    private updateScore scoreAndComb;
+    
    
    
 
     // Use this for initialization
     void Start ()
     {
+        scoreAndComb = GameObject.Find("Canvas/Score").GetComponent<updateScore>();
         coldImage = transform.Find("onClick").GetComponent<Image>();
 	}
 	
@@ -41,7 +43,8 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
                
                 isComb = true;
                 judgeText = "perfect";
-                updateScore.scoreIns.AddScore(1000);
+                scoreAndComb.AddScore(1000);
+                //updateScore.scoreIns.AddScore(1000);
                 judgementCreate();
                
             }
@@ -50,7 +53,8 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
             {
               
                 isComb = true;
-                updateScore.scoreIns.AddScore(500);
+                scoreAndComb.AddScore(500);
+                //updateScore.scoreIns.AddScore(500);
                 judgeText = "great";
                 judgementCreate();
                
@@ -62,7 +66,8 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
                 isComb = false;
                 judgeText = "bad";
                 judgementCreate();
-               
+                scoreAndComb.CleanComb();
+                //updateScore.CleanComb();
             }
            
             Destroy(this.gameObject);
@@ -74,7 +79,8 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
             isComb = false;
             judgeText = "miss";
             judgementCreate();
-          
+            scoreAndComb.CleanComb();
+            //updateScore.CleanComb();
 
             Destroy(this.gameObject);
      
@@ -103,18 +109,18 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
         judgement.transform.Find("judgementText").GetComponent<Text>().text = judgeText;
         judgementIns = Instantiate(judgement);
         judgementIns.transform.localPosition = new Vector3(transform.position.x, transform.position.y, 0);
-        judgementIns.transform.localScale =  new Vector3(2.5f,2.5f,2.5f);
+        //judgementIns.transform.localScale =  new Vector3(2.5f,2.5f,2.5f);
         judgementIns.transform.SetParent(transform.parent);
        
-        if (isComb == true)
-        {
-            judgementIns.transform.Find("combText").GetComponent<Text>().text = "Comb" + (++combHit );
-        }
-        else
-        {
-            judgementIns.transform.Find("combText").GetComponent<Text>().text = "";
-            combHit = 0;
-        }
+        //if (isComb == true)
+        //{
+        //    judgementIns.transform.Find("combText").GetComponent<Text>().text = "Comb" + (++combHit );
+        //}
+        //else
+        //{
+        //    judgementIns.transform.Find("combText").GetComponent<Text>().text = "";
+        //    combHit = 0;
+        //}
            
 
         judgementIns.transform.SetAsFirstSibling();

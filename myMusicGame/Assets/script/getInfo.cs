@@ -21,11 +21,12 @@ public class getInfo : MonoBehaviour
     
     private string select;
 
-    
+    [HideInInspector]
+    public AudioSource tryMusic;
 	
 	void Start ()
 	{
-
+        tryMusic = this.GetComponent<AudioSource>();
 	    select = ClickChoose.chooseName;
 	    name = this.transform.GetChild(0);
 	    image = this.transform.GetChild(1);
@@ -63,12 +64,20 @@ public class getInfo : MonoBehaviour
             levelNum--;
         }
 
-        this.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("try/" + select);
-        Invoke("tryOn",1);
+        tryMusic.clip = Resources.Load<AudioClip>("try/" + select);
+        if (select == "GuiltyCrown" || select == "WeightoftheWorld")
+        {
+            tryMusic.volume = 0.13f;
+        }
+        else{
+            tryMusic.volume = 0.23f;
+        }
+        Invoke("tryOn",1);  //循环播放试听
     }
 
     public void startSound()
     {
+        tryMusic.Stop();
         startbutton.GetComponent<AudioSource>().Play();
         GetChoose.level.Clear();
         Invoke("loadScene",1);
@@ -81,6 +90,6 @@ public class getInfo : MonoBehaviour
 
     private void tryOn()
     {
-        this.GetComponent<AudioSource>().Play();
+        tryMusic.Play();
     }
 }
