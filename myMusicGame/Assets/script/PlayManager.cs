@@ -11,7 +11,7 @@ public class PlayManager : MonoBehaviour
 
     public GameObject bg;  //get background
 
-    private bool isPause = false;
+    public bool isPause = false;
 
     void Update()
     {

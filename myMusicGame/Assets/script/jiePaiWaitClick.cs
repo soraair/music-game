@@ -17,11 +17,16 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
     private bool isComb = false;
     private static int combHit = 0;
     private updateScore scoreAndComb;
-    
+    private PlayManager playManager;
    
    
 
     // Use this for initialization
+    void Awake()
+    {
+        playManager = GameObject.Find("PlayManager").GetComponent<PlayManager>();
+    }
+    
     void Start ()
     {
         scoreAndComb = GameObject.Find("Canvas/Score").GetComponent<updateScore>();
@@ -92,7 +97,8 @@ public class jiePaiWaitClick : MonoBehaviour ,IPointerClickHandler,IPointerEnter
     public void OnPointerClick(PointerEventData eventData)
     {
        
-        if (eventData.pointerPress==this.gameObject)   
+        if (eventData.pointerPress==this.gameObject)
+            if (!playManager.isPause)
          isClick = true; 
     }
 
